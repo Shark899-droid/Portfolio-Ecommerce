@@ -22,4 +22,8 @@ export const OrderItem = sequelize.define('OrderItem', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  price_at_purchase: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
 })

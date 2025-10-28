@@ -1,4 +1,6 @@
 import {User} from "../models/User.js"
+import {Order} from "../models/Order.js"
+import { Cart } from "../models/Cart.js"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 export const register = async (req,res) =>{
@@ -35,14 +37,18 @@ res.status(201).json({token,name:user.name,id:user.id})
 }
 export const getMyOrders = async (req,res) =>{
 try{
-
+    const {user_id} = req.body
+const order = await Order.findAll({where:{user_id}})
+res.status(200).json(order)
 }catch(error){
     res.status(500).json({message:error.message})
 }
 }
 export const getMyCart = async (req,res) =>{
 try{
-
+    const { user_id } = req.body
+    const cart = await Cart.findAll({ where: { user_id } })
+    res.status(200).json(cart)
 }catch(error){
     res.status(500).json({message:error.message})
 }
