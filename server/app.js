@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import morgan from 'morgan'
 import UserRouter from "./controllers/User.js"
+import ProductRouter from "./controllers/Product.js"
 import sequelize from "./database/database.js"
 import { User } from './models/User.js'
 import { Product } from './models/Product.js'
@@ -40,6 +41,7 @@ app.use(morgan('dev'))
 app.use(cors())
 app.use(express.json())
 app.use("/api/v1",UserRouter)
+app.use("/api/v1",ProductRouter)
 const port = process.env.PORT
 const start = async () => {
   await sequelize.sync({ alter: true })
