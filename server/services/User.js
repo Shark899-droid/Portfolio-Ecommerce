@@ -1,6 +1,7 @@
 import {User} from "../models/User.js"
 import {Order} from "../models/Order.js"
 import { Cart } from "../models/Cart.js"
+import { addCart } from "./Cart.js"
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 export const register = async (req,res) =>{
@@ -29,8 +30,9 @@ const isPasswordRight = await bcrypt.compare(password,user.password)
 if(!isPasswordRight){
     res.status(500).json({ message: 'Incorrect password' })
 }
+const cart = await addCart()
 const token = jwt.sign({},process.env.JWT_SECRET,{expiresIn:process.env.JWT_EXPIRE})
-res.status(201).json({token,name:user.name,id:user.id})
+res.status(201).json({token,name:user.name,id:user.id,cart_id:cart.id})
 }catch(error){
     res.status(500).json({message:error.message})
 }
